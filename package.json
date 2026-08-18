@@ -1,0 +1,61 @@
+{
+  "name": "bull-board-cli",
+  "version": "1.0.0",
+  "description": "Local CLI that discovers BullMQ queues in Redis and serves a Bull Board UI",
+  "main": "src/cli.js",
+  "bin": {
+    "bull-board-cli": "./bin/bull-board-cli.js"
+  },
+  "scripts": {
+    "start": "node ./bin/bull-board-cli.js",
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "coverage:check": "node --test --experimental-test-coverage --test-coverage-lines=85 --test-coverage-functions=80 --test-coverage-branches=78",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [
+    "bullmq",
+    "bull-board",
+    "redis",
+    "queue",
+    "cli"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "author": "alexander.s",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thealek0/bull-board-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thealek0/bull-board-cli/issues"
+  },
+  "homepage": "https://github.com/thealek0/bull-board-cli#readme",
+  "dependencies": {
+    "@bull-board/api": "^8.3.2",
+    "@bull-board/express": "^8.3.2",
+    "@napi-rs/keyring": "^1.3.0",
+    "bullmq": "^5.81.2",
+    "commander": "^15.0.0",
+    "express": "^5.2.1",
+    "inquirer": "^14.0.2",
+    "ioredis": "^5.11.1",
+    "open": "^11.0.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^9.1.2",
+    "globals": "^17.8.0",
+    "prettier": "^3.9.6"
+  }
+}
