@@ -20,7 +20,11 @@ test("startServer binds a port and serves the board without opening a browser", 
     // port 0.
     assert.equal(url, `http://${address}:${port}/queues`);
 
-    const res = await fetch(`http://localhost:${port}/queues`);
+    // Fetch the address the server actually bound (loopback IPv4), not
+    // "localhost" — which can resolve to IPv6 ::1 first and, on a server bound
+    // only to 127.0.0.1, refuse the connection (fails on Node 18 / CI, where
+    // fetch has no IPv4 fallback).
+    const res = await fetch(url);
     assert.equal(res.status, 200);
     const body = await res.text();
     assert.match(body, /test-board/);
@@ -45,7 +49,7 @@ test("startServer binds to loopback by default (not exposed to the network)", as
 });
 
 test("startServer works without a title (default board config branch)", async () => {
-  const { server } = await startServer({
+  const { server, url } = await startServer({
     redis: {},
     queues: [],
     port: 0,
@@ -53,8 +57,7 @@ test("startServer works without a title (default board config branch)", async ()
   });
 
   try {
-    const { port } = server.address();
-    const res = await fetch(`http://localhost:${port}/queues`);
+    const res = await fetch(url);
     assert.equal(res.status, 200);
   } finally {
     await new Promise((resolve) => server.close(resolve));
